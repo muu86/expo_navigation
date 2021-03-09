@@ -1,56 +1,64 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 
-export default function ShowImagesView() {
+export default function ShowImagesView({ route }) {
+
+  console.log(route);
+  const { data } = route.params;
+
+  console.log(typeof data);
+  console.log(data);
+  console.log(data.image_path);
+
   return (
     <View style={styles.imagesContainer}>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/0.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_0.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/1.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_1.png`,
         }}
       ></Image>
 
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/2.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_2.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/3.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_3.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/4.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_4.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/5.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_5.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/6.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_6.png`,
         }}
       ></Image>
       <Image
         style={styles.image}
         source={{
-          uri: "http://121.138.83.4/static/output_images/7.png",
+          uri: `http://121.138.83.4/static/output_images/${data.image_path}_7.png`,
         }}
       ></Image>
     </View>

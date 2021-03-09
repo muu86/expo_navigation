@@ -25,8 +25,8 @@ function SelfRecordScreen() {
   return <SelfRecordView />;
 }
 
-function ShowImagesScreen() {
-  return <ShowImagesView />;
+function ShowImagesScreen({ navigation, route }) {
+  return <ShowImagesView navigation={navigation} route={route} />;
 }
 
 const Tab = createBottomTabNavigator();
