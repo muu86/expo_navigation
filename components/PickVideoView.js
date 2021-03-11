@@ -75,11 +75,8 @@ export default function PickVideoView() {
     const data = await res.json()
     console.log(data)
     console.log(typeof data);
-
-    const image0 = await fetch(`http://121.138.83.4:80/get-images/${videoName}/${0}`)
-    
-    console.dir(image0)
     console.log("ShowImage 페이지로 이동")
+    
     navigation.navigate('ShowImages', {
       data: data
     });
