@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from "expo-image-picker";
 import VideoPlayer from "./VideoPlayer";
 import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import { FileSystemUploadType } from "expo-file-system";
 
 export default function PickVideoView() {
   const [video, setVideo] = useState(null);
@@ -63,22 +65,60 @@ export default function PickVideoView() {
       uri: video,
     });
 
-    const res = await fetch("http://121.138.83.4:80/uploads", {
+    const data = await fetch("http://121.138.83.4:80/uploads", {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
       },
       body: formData,
     })
+      .then(res => res.json())
       .catch((error) => console.log(error));
 
-    const data = await res.json()
-    console.log(data)
-    console.log(typeof data);
-    console.log("ShowImage 페이지로 이동")
+    // console.log("데이터 출력")
+    // console.log(data)
+    // console.log(typeof data);
+    // console.log("")
+    let imageNumber = Object.keys(data);
+    // console.log(imageNumber);
+    // Array.splice 하면 기존 imageNumber 는 "image_path" 제외된 숫자로 된 Array
+    const imagePath = data[imageNumber.splice(-1, 1)];
+    // console.log(imagePath);
+
+    // images 를 저장하기 전 디렉토리 만들기
+    await FileSystem.makeDirectoryAsync(
+      FileSystem.documentDirectory + imagePath
+    );
+    
+    // // 만든 디렉토리에 image 저장
+    let images = imageNumber.map(index => (
+      FileSystem.downloadAsync(
+        `http://121.138.83.4/images/${imagePath}/${index}.png`, 
+        FileSystem.documentDirectory + imagePath + `/${index}.png`
+      )
+    ))
+    // console.log(images);
+    images = await Promise.all(images);
+
+    // file:/// uri => content://
+    images = images.map(image => (
+      FileSystem.getContentUriAsync(image.uri)
+    ))
+    images = await Promise.all(images);
+    
+    console.log(images);
+
+    // images = images.map(item => (
+    //   item.uri
+    // ))
+    
+    // console.log(images);
+
+    console.log("ShowImage 페이지로 이동");
     
     navigation.navigate('ShowImages', {
-      data: data
+      data: data,
+      images: images,
     });
   };
 

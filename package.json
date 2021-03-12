@@ -27,7 +27,8 @@
     "expo-media-library": "~10.0.0",
     "expo-av": "~8.7.0",
     "expo-sharing": "~8.5.0",
-    "@react-native-community/viewpager": "4.2.0"
+    "@react-native-community/viewpager": "4.2.0",
+    "expo-file-system": "~9.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

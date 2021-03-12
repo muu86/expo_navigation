@@ -12,6 +12,7 @@ import {
 
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
 import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 
 const { width, height } = Dimensions.get('window');
 const DOT_SIZE = 40;
@@ -108,19 +109,32 @@ const Item = ({ feedback, image, index, scrollX }) => {
     data: feedback[key]
   }));
 
- 
-  console.log("===================")
-  console.log("-------------------")
-  console.log(good)
-  console.log("-------------------")
-  console.log(normal)
-  console.log("-------------------")
-  console.log(bad)
+  // console.log(image);
+  // console.log(index);
+
+  // let imageInfo = FileSystem.getInfoAsync(image);  
+  // console.log(imageInfo.then(e => console.log(e)));
+
+  // console.log(image);
+
+  // console.log(`${FileSystem.cacheDirectory}${image}/${index}.png`);
+
+  // let path = await FileSystem.getContentUriAsync(`${FileSystem.documentDirectory}${image}/${index}.png`);
+  // console.log(path);
+
+  // (async () => {
+  //   let path = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory + image);
+  //   console.log(path);
+  // })();
+
+  console.log(image)
+  // image = await FileSystem.getContentUriAsync(image);
+  // console.log(image);
 
   return (
     <View style={styles.itemStyle}>
       <Animated.Image
-        source={{ uri: `http://121.138.83.4/static/output_images/${image}.png` }}
+        source={{ uri: image }}
         style={[
           styles.imageStyle,
           {
@@ -229,12 +243,11 @@ const Pagination = ({ data, scrollX }) => {
 }
 
 const ShowImagesView = ({ route }) => {
-  console.log(route);
+  // console.log(route);
   const response = route.params.data;
-  console.log("==============================");
-  console.log("response: ", response);
-  const imagePath = response["image_path"]; 
-  console.log(imagePath);
+  const images = route.params.images;
+  // const imagePath = response["image_path"]; 
+  // console.log(imagePath);
 
   const poseName = ["address", "take away", "back swing", "top", "down swing", "impact", "release", "follow through"];
 
@@ -255,10 +268,10 @@ const ShowImagesView = ({ route }) => {
   )).map(key => ({
     feedback: response[key],
     key: poseName[key],
-    image: `${imagePath}_${key}`,
+    image: images[key],
   }));
 
-  console.log(data);
+  // console.log(data);
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const [isSharing, setSharing] = useState(false);
